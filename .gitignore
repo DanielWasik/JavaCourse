@@ -4,3 +4,8 @@
 
 # Java build files
 target/
+
+# Eclipse project config
+.project
+.classpath
+.settings
