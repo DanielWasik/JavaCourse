@@ -19,10 +19,15 @@ import tdd.vendingMachine.IProduct;
 import tdd.vendingMachine.IProductType;
 import tdd.vendingMachine.IShelve;
 import tdd.vendingMachine.IVendingMachine;
+import tdd.vendingMachine.PRODUCT_TYPE;
+import tdd.vendingMachine.impl.product.Product;
+import tdd.vendingMachine.impl.coin.COIN_TYPE;
+import tdd.vendingMachine.impl.coin.Coin;
 import tdd.vendingMachine.impl.exceptions.IllegalClassArgumentException;
 import tdd.vendingMachine.impl.exceptions.IllegalEmptyArgumentException;
 import tdd.vendingMachine.impl.exceptions.IllegalNullArgumentException;
 import tdd.vendingMachine.impl.exceptions.IllegalOutOfRangeArgumentException;
+import tdd.vendingMachine.impl.machine.VendingMachine;
 
 import static org.junit.Assert.*;
 
@@ -40,19 +45,22 @@ public class VendingMachineTest {
 
     @Before
     public void setUp() {
-        product1 = new Product();
+/*        product1 = new Product();
         product2 = new Product();
         product3 = new Product();
-
+*/
         shelveNbr = 1;
+        product1 = Product.createProducts(PRODUCT_TYPE.BAR, 1).elementAt(0);
+        product2 = Product.createProducts(PRODUCT_TYPE.COLA, 1).elementAt(0);
+        product3 = Product.createProducts(PRODUCT_TYPE.COLA, 1).elementAt(0);
 
         products = new Vector<Product>();
         products.add(product2);
         products.add(product3);
-        
-        coin1 = new Coin();
-        coin2 = new Coin();
-        coin3 = new Coin();
+
+        coin1 = Coin.createCoins(COIN_TYPE.FIVE_DOLAR, 1).elementAt(0);
+        coin2 = Coin.createCoins(COIN_TYPE.FIVE_DOLAR, 1).elementAt(0);
+        coin3 = Coin.createCoins(COIN_TYPE.FIFTY_CENT, 1).elementAt(0);
 
         coins = new Vector<Coin>();
         coins.add(coin1);
@@ -99,10 +107,6 @@ public class VendingMachineTest {
     @Test
     public final void testAddProduct() {
         interfaceImpl.addProduct(shelveNbr, product1);
-
-        assertNotNull(interfaceImpl.getShelves());
-        assertNotNull(interfaceImpl.getShelves().get(shelveNbr));
-        assertNotNull(interfaceImpl.getShelves().get(shelveNbr).getProducts());
 
         assertTrue(interfaceImpl.getShelves().get(shelveNbr).getNbrOfProducts() == 1);
         assertTrue(product1.isSame(interfaceImpl.getShelves().get(shelveNbr).getProducts().elementAt(0)));
@@ -164,7 +168,7 @@ public class VendingMachineTest {
     @Test
     public final void testGiveChange() {
         Vector<Coin> givenChange = interfaceImpl.giveChange(change1);
-        assertTrue(givenChange != null && givenChange.size() == 0);
+        assertTrue(givenChange.size() == 0);
     }
 
     @Test
@@ -201,7 +205,7 @@ public class VendingMachineTest {
     @Parameterized.Parameters
     public static Collection<Object> instancesToTest() {
         return Arrays.asList(new Object[]{
-                                            new DummyVendingMachine()
+                                            new VendingMachine(10)
                                             });
     }
 }
@@ -229,84 +233,11 @@ class CustomProduct implements IProduct {
     }
 }
 
-class Coin implements ICoin {
-
-    @Override
-    public BigDecimal getValue() {
-        return null;
-    }
-
-}
-
 class CustomCoin implements ICoin {
 
     @Override
     public BigDecimal getValue() {
         return null;
     }
-
-}
-
-class DummyVendingMachine implements IVendingMachine {
-
-    @Override
-    public Map<Integer, IShelve> getShelves() {
-        return null;
-    }
-
-    @Override
-    public <T extends ICoin> boolean insertCoin(T coin) {
-        return false;
-    }
-
-    @Override
-    public <T extends ICoin> void addCoins(Vector<T> coins) {
-
-    }
-
-    @Override
-    public <T extends ICoin> boolean getBackCoins(Vector<T> coins) {
-        return false;
-    }
-
-    @Override
-    public <T extends ICoin> Vector<T> giveChange(BigDecimal change) {
-        return null;
-    }
-
-    @Override
-    public boolean isChangePossible(BigDecimal change) {
-        return false;
-    }
-
-    @Override
-    public <T extends IProduct> void addProducts(int shelveNbr, Vector<T> products) {
-    }
-
-    @Override
-    public <T extends IProduct> void addProduct(int shelveNbr, T product) {
-    }
-}
-
-class Product implements IProduct {
-
-    @Override
-    public IProductType getType() {
-        return null;
-    }
-
-    @Override
-    public BigDecimal getPrice() {
-        return null;
-    }
-
-    @Override
-    public String getDesc() {
-        return null;
-    }
-
-    @Override
-    public boolean isSame(IProduct other) {
-        return false;
-    }
+    
 }
