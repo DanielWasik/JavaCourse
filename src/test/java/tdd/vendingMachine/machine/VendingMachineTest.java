@@ -287,3 +287,26 @@ class DummyVendingMachine implements IVendingMachine {
     public <T extends IProduct> void addProduct(int shelveNbr, T product) {
     }
 }
+
+class Product implements IProduct {
+
+    @Override
+    public IProductType getType() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal getPrice() {
+        return null;
+    }
+
+    @Override
+    public String getDesc() {
+        return null;
+    }
+
+    @Override
+    public boolean isSame(IProduct other) {
+        return false;
+    }
+}

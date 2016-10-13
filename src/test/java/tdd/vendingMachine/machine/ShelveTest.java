@@ -1,6 +1,5 @@
 package tdd.vendingMachine.machine;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Vector;
@@ -14,10 +13,11 @@ import org.junit.runners.Parameterized;
 import org.junit.runner.RunWith;
 
 import tdd.vendingMachine.IProduct;
-import tdd.vendingMachine.IProductType;
 import tdd.vendingMachine.IShelve;
 import tdd.vendingMachine.PRODUCT_TYPE;
 import tdd.vendingMachine.SHELVE_TYPE;
+import tdd.vendingMachine.impl.machine.Shelve;
+import tdd.vendingMachine.impl.product.Product;
 
 import static org.junit.Assert.*;
 
@@ -30,8 +30,8 @@ public class ShelveTest {
 
     @Before
     public void setUp() {
-        product1 = new Product();
-        product2 = new Product();
+        product1 = Product.createProducts(PRODUCT_TYPE.COLA, 1).firstElement();
+        product2 = Product.createProducts(PRODUCT_TYPE.COLA, 1).firstElement();
     }
 
     public ShelveTest(IShelve interfaceImpl) {
@@ -48,11 +48,10 @@ public class ShelveTest {
         assertTrue(interfaceImpl.getNbrOfProducts() == 0);
 
         interfaceImpl.addProduct(product1);
-        interfaceImpl.addProduct(product2);
 
         assertTrue(interfaceImpl.getNbrOfProducts() == 1);
 
-        interfaceImpl.addProduct(product1);
+        interfaceImpl.addProduct(product2);
 
         assertTrue(interfaceImpl.getNbrOfProducts() == 2);
     }
@@ -121,63 +120,7 @@ public class ShelveTest {
     @Parameterized.Parameters
     public static Collection<Object> instancesToTest() {
         return Arrays.asList(new Object[]{
-                                            new DummyShelve()
+                                            new Shelve()
                                             });
-    }
-}
-
-class Product implements IProduct {
-
-    @Override
-    public IProductType getType() {
-        return null;
-    }
-
-    @Override
-    public BigDecimal getPrice() {
-        return null;
-    }
-
-    @Override
-    public String getDesc() {
-        return null;
-    }
-
-    @Override
-    public boolean isSame(IProduct other) {
-        return false;
-    }
-}
-
-class DummyShelve implements IShelve {
-
-    @Override
-    public void addProduct(IProduct product) {
-        
-    };
-    
-    @Override
-    public int getNbrOfProducts() {
-        return 0;
-    }
-
-    @Override
-    public IProductType getType() {
-        return PRODUCT_TYPE.COLA;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public IProduct removeProduct() {
-        return null;
-    }
-
-    @Override
-    public Vector<IProduct> getProducts() {
-        return null;
     }
 }
