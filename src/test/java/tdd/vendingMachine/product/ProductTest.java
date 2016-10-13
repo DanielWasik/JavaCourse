@@ -1,6 +1,5 @@
 package tdd.vendingMachine.product;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -13,6 +12,8 @@ import org.junit.runner.RunWith;
 import tdd.vendingMachine.IProduct;
 import tdd.vendingMachine.IProductType;
 import tdd.vendingMachine.PRODUCT_TYPE;
+import tdd.vendingMachine.impl.product.Product;
+
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
@@ -54,30 +55,7 @@ public class ProductTest {
     @Parameterized.Parameters
     public static Collection<Object> instancesToTest() {
         return Arrays.asList(new Object[]{
-                                            new DummyProduct()
+                                            Product.createProducts(PRODUCT_TYPE.COLA, 1).firstElement()
                                             });
-    }
-}
-
-class DummyProduct implements IProduct {
-
-    @Override
-    public IProductType getType() {
-        return PRODUCT_TYPE.BAR;
-    }
-
-    @Override
-    public BigDecimal getPrice() {
-        return new BigDecimal("0");
-    }
-
-    @Override
-    public String getDesc() {
-        return "";
-    }
-
-    @Override
-    public boolean isSame(IProduct other) {
-        return false;
     }
 }
