@@ -11,6 +11,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runner.RunWith;
 
 import tdd.vendingMachine.ICoin;
+import tdd.vendingMachine.impl.coin.COIN_TYPE;
+import tdd.vendingMachine.impl.coin.Coin;
+
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
@@ -44,16 +47,7 @@ public class CoinTest {
     @Parameterized.Parameters
     public static Collection<Object> instancesToTest() {
         return Arrays.asList(new Object[]{
-                                            new DummyCoin()
+                                            Coin.createCoins(COIN_TYPE.FIVE_DOLAR, 1).firstElement()
                                             });
-    }
-}
-
-class DummyCoin implements ICoin {
-    private BigDecimal coinValue = new BigDecimal("2");
-
-    @Override
-    public BigDecimal getValue() {
-        return coinValue;
     }
 }
