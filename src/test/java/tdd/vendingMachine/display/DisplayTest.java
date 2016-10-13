@@ -10,6 +10,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runner.RunWith;
 
 import tdd.vendingMachine.IDisplay;
+import tdd.vendingMachine.impl.display.Display;
+
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
@@ -69,26 +71,6 @@ public class DisplayTest {
 
     @Parameterized.Parameters
     public static Collection<Object> instancesToTest() {
-        return Arrays.asList(new Object[] { new DummyDisplay() });
-    }
-}
-
-class DummyDisplay implements IDisplay {
-
-    @Override
-    public void displayMessage(String msg) {
-    }
-
-    @Override
-    public void displayInputMessage(String msg) {
-    }
-
-    @Override
-    public String getUserInput() {
-        return null;
-    }
-
-    @Override
-    public void clearScreen() {
+        return Arrays.asList(new Object[] { new Display() });
     }
 }
